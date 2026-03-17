@@ -1,15 +1,24 @@
 class Solution:
-    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        
+
         heap = []
+        rows = len(points)
+        cols = len(points[0])
 
-        rows = len(matrix)
-        cols = len(matrix[0])
+        for x, y in points:
+          dist = x*x + y*y
+        
+          heapq.heappush(heap, (-dist, x, y))
 
-        for i in range(rows):
-            for j in range(cols):
-                heapq.heappush(heap,-matrix[i][j])
+        if len(heap)> k:
+                heapq.heappop(heap)
 
-                if len(heap)>k:
-                    heapq.heappop(heap)
 
-        return -heapq.heappop(heap)
+        result = []
+
+        for item in heap:
+            _,x,y = item
+            result.append([x,y])
+
+        return result    
